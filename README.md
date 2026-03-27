@@ -1,4 +1,4 @@
-# 🧠 Advanced Multi-Modal RAG System
+# 🧠 Multi-Modal RAG System
 
 > *Production-grade Retrieval-Augmented Generation with Hybrid Search, Re-ranking, and Answer Validation*
 
