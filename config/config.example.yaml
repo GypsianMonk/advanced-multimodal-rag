@@ -1,0 +1,37 @@
+# ─── config/config.example.yaml ──────────────────────────────────────────────
+# Copy to config.yaml and fill in your values
+
+models:
+  text_embedding: "all-MiniLM-L6-v2"          # Sentence-Transformers model
+  image_embedding: "ViT-B/32"                  # CLIP model
+  reranker: "cross-encoder/ms-marco-MiniLM-L-6-v2"
+
+llm:
+  provider: "anthropic"                        # anthropic | openai
+  model: "claude-sonnet-4-20250514"            # or gpt-4o
+
+retrieval:
+  bm25_weight: 0.4
+  vector_weight: 0.6
+  top_k_broad: 50
+  top_k_final: 10
+
+chunk_size: 512
+chunk_overlap: 64
+max_context_tokens: 3000
+min_confidence: 0.6
+max_retries: 2
+
+memory_backend: "memory"                       # memory | redis
+
+# redis:
+#   host: localhost
+#   port: 6379
+#   ttl: 86400
+
+trusted_sources: []
+
+storage:
+  faiss_index: "data/faiss.index"
+  faiss_docs: "data/faiss_docs.pkl"
+  bm25_index: "data/bm25.pkl"
