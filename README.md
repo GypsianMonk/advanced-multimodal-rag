@@ -142,4 +142,4 @@ pytest tests/ -v
 
 ## 📄 License
 
-MIT License — see [LICENSE](LICENSE)
+GypsianMonk
