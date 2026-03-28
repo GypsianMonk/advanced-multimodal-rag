@@ -1,0 +1,21 @@
+# ─── config/eval.yaml ────────────────────────────────────────────────────────
+# Evaluation suite configuration
+
+eval_data: "data/eval/eval_set.json"   # path to evaluation dataset
+
+retrieval:
+  k_values: [1, 5, 10]                 # evaluate Precision/Recall at these K values
+  mrr: true
+
+generation:
+  faithfulness: true
+  hallucination_check: true
+  min_acceptable_confidence: 0.60
+
+latency:
+  measure: true
+  p_values: [50, 95, 99]               # percentiles to report
+
+output:
+  report_path: "logs/eval_report.json"
+  print_summary: true

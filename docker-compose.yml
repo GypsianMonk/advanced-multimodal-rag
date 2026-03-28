@@ -1,0 +1,57 @@
+version: "3.9"
+
+services:
+  rag-api:
+    build: .
+    container_name: multimodal-rag-api
+    ports:
+      - "8000:8000"
+    environment:
+      - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY}
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+    volumes:
+      - ./data:/app/data
+      - ./config/config.yaml:/app/config/config.yaml:ro
+      - ./logs:/app/logs
+    depends_on:
+      redis:
+        condition: service_healthy
+    restart: unless-stopped
+    networks:
+      - rag-net
+
+  redis:
+    image: redis:7-alpine
+    container_name: rag-redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis-data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - rag-net
+
+  # Optional: Chroma vector DB as alternative to FAISS
+  chromadb:
+    image: chromadb/chroma:latest
+    container_name: rag-chroma
+    ports:
+      - "8001:8000"
+    volumes:
+      - chroma-data:/chroma/chroma
+    networks:
+      - rag-net
+    profiles:
+      - chroma  # only start with: docker-compose --profile chroma up
+
+volumes:
+  redis-data:
+  chroma-data:
+
+networks:
+  rag-net:
+    driver: bridge
